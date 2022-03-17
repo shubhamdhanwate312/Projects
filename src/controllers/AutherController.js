@@ -4,7 +4,7 @@ const createauther= async function (req, res) {
     try{
     let data= req.body
     let savedData= await AutherModel.create(data)
-    return res.send({msg: savedData})
+    return res.status(201).send({msg: savedData})
 }
 
 catch(err){

@@ -7,7 +7,7 @@ const createblog = async function (req, res) {
     let data = req.body
     let savedData = await BlogModel.create(data)
 
-    return res.status(200).send({ msg: savedData })
+    return res.status(201).send({ msg: savedData })
   }
 
   catch (err) {
