@@ -11,7 +11,8 @@ let authenticate = function (req, res, next) {
     if (!decodedToken) return res.status(401).send({ status: false, msg: "token is not valid" })
 
     // Token authorization-----------------------------
-    req.user = decodedToken.autherID        
+    req.user = decodedToken.autherID
+          
     next()
 
   }
