@@ -12,11 +12,7 @@ const autherSchema = new mongoose.Schema({
                 type:String,
                 unique:true,
                 trim: true,
-                // validate:{
-                //       validator: validator.isEmail,
-                //       message: '{VALUE} is not a valid email',
-                //       isAsync: false
-                //     }
+               
                 },
 
         password: { type: String, required: true, trim: true }
