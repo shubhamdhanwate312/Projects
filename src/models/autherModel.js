@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-// const validator = require('validator');
+
 const autherSchema = new mongoose.Schema({
 
         firstName: { type: String, required: true, trim: true },
@@ -12,7 +12,6 @@ const autherSchema = new mongoose.Schema({
                 type:String,
                 unique:true,
                 trim: true,
-               
                 },
 
         password: { type: String, required: true, trim: true }

@@ -7,7 +7,7 @@ const BlogController= require("../controllers/blogController")
 
 const middleware=require("../middleware/authh")
 
-// Author routes------------------------------------------------------------------------
+// Auther routes------------------------------------------------------------------------
 router.post("/auther",AutherController.createauther)
 router.post("/login",AutherController.loginAuther)
 
