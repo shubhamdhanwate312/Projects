@@ -3,7 +3,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId
 const blogSchema = new mongoose.Schema({
 
     title: { type: String, required: true,trim: true },
-    
+
     body: { type: String, required: true,trim:true},
 
     autherID: { type: ObjectId, ref: "Auther", required: true, trim: true },
@@ -11,6 +11,8 @@ const blogSchema = new mongoose.Schema({
     tags:[{type:String},{trim:true}] ,
 
     category: {type:String, required:true,trim:true}, 
+
+    subcategory:[{type:String},{trim:true}],
 
     isdeleted: {type:Boolean, default: false},
 

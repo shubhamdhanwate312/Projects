@@ -123,9 +123,7 @@ const deletebyQuery = async function (req, res) {
       return res.status(400).send({ status: false, msg: "please provide input data" })
     }
     console.log(input)
-    if (Object.keys(input).length == 0)
-      return res.status(400).send({ status: false, msg: "please provide input data" })
-
+  
     let deletedBlog = await BlogModel.updateMany({ $and: [input, { isdeleted: false }] }, { $set: { isdeleted: true, deletedAt: Date.now() } }, { new: true })
     if (deletedBlog.length > 0) {
       return res.status(200).send({ status: true, msg: "blog has been  deleted" })
