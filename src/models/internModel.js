@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const ObjectId = mongoose.Schema.Types.ObjectId
 
 
@@ -16,7 +17,8 @@ const internSchema=new mongoose.Schema({
     mobile: {type:Number,
         reqiured:true,
         unique:true,
-        trim:true, },
+        trim:true,
+        },
  
     collegeId: {type:ObjectId,
          ref:"collegeDB" ,
