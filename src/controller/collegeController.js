@@ -7,7 +7,9 @@ const isValid = function (value) {
   return true
 
 }
-
+// function capitalize(input) {  
+  //     return input.toLowerCase().split(' ').map(s => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');  
+  // }
 /// CREATE COLLEGE............................................................................................
 
 const createCollege = async function (req, res) {
@@ -65,7 +67,7 @@ const getcollegeDetails = async function (req, res) {
       let data = await CollegeModel.findOne({ name: collogename, isDeleted: false })
 
       if (!data)
-        return res.status(400).send({ status: false, message: "NO such college Found" });
+        return res.status(400).send({ status: false, message: "NO such college " });
 
       const College_id = data._id
       let internDetails = await InternModel.find({ collegeId: College_id, isDeleted: false })
