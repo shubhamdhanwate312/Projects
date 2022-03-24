@@ -16,7 +16,7 @@ const createCollege = async function (req, res) {
   try {
     const data = req.body;
 
-    if (Object.keys(data) != 0) {
+    if (Object.keys(data).length > 0){
 
       const { name, fullName, logoLink } = data
       if (!isValid(data.name)) { return res.status(400).send({ status: false, msg: "name is required" }) }
