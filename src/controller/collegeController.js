@@ -7,9 +7,7 @@ const isValid = function (value) {
   return true
 
 }
-// function capitalize(input) {  
-  //     return input.toLowerCase().split(' ').map(s => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');  
-  // }
+
 /// CREATE COLLEGE............................................................................................
 
 const createCollege = async function (req, res) {
@@ -35,7 +33,15 @@ const createCollege = async function (req, res) {
       if (!(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(logoLink))) {
         return res.status(400).send({ status: false, message: "please enter a valid logo link" })
       }
-
+            const sentnce = data.fullName
+            let FirstCaptal = convertFirstLetterToUpperCase(sentnce)
+            function convertFirstLetterToUpperCase(sentnce) {
+                var splitStr = sentnce.toLowerCase().split(' ');
+                for (var i = 0; i < splitStr.length; i++) {
+                    splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+                }
+                return splitStr.join(' ');
+            }
 
       const Name = await CollegeModel.findOne({ name, fullName, logoLink });
       if (Name) {
