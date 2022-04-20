@@ -43,7 +43,7 @@ const createCart = async function(req, res) {
         if(!findProduct){
           return res.status(400).send({status:false, message:"product is not valid"})
          }
-       // res.send(findProduct)
+      
         let totalPrice2 = findProduct.price
         let newquantity = items[0].quantity
         let flage = 0
@@ -68,16 +68,6 @@ const createCart = async function(req, res) {
 
 
 
-//Updates a cart by either decrementing the quantity of a product by 1 or deleting a product from the cart.
-// - Get cart id in request body.
-// - Get productId in request body.
-// - Get key 'removeProduct' in request body. 
-// - Make sure that cart exist.
-// - Key 'removeProduct' denotes whether a product is to be removed({removeProduct: 0}) or its quantity has to be decremented by 1({removeProduct: 1}).
-// - Make sure the userId in params and in JWT token match.
-// - Make sure the user exist
-// - Get product(s) details in response body.
-// - Check if the productId exists and is not deleted before updating the cart.
 
 
 
@@ -93,10 +83,7 @@ const updatedCart = async function (req, res) {
       return res.status(400).send({ status: false, msg: "userId is not a valid objectId" })
     }
 
-    //-----authorization--------------
-    // if (userId!= idFromToken) {
-    //   return res.status(403).send({ status: false, message: "User not authorized" })
-    // }
+   
 
     let data = req.body
     const { cartId, productId, removeProduct } = data
@@ -179,9 +166,7 @@ const getcartById = async function (req, res) {
   try {
     const userId = req.params.userId
 
-    // if (req.userId !== userId) {
-    //   return res.status(401).send({ status: false, msg: "you are not authorized" })
-    // }
+   
     if (!validator.isValidObjectId(userId)) {
       return res.status(400).send({ status: false, msg: "invalid userid" })
     }
@@ -212,13 +197,7 @@ const getcartById = async function (req, res) {
 const emptyCart = async function (req, res) {
   try {
     const userId = req.params.userId
-    // const queryParams = req.query;
-    
-    // if (!validator.isValidRequestBody(queryParams)) {
-    //   return res
-    //     .status(404)
-    //     .send({ status: false, message: " page not found" });
-    // }
+   
 
     const cartByUserId = await cartModel.findOne({ userId: userId });
 
