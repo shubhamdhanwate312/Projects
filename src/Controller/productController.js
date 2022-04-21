@@ -203,7 +203,7 @@ const Updatedetails = async (req, res) => {
     let productImg = await aws.uploadFile(files[0]);
 
     if (!productImg) {
-      return res.status(400).send({ status: false, msg: "error in uloading the files" });
+      return res.status(400).send({ status: false, msg: "error in uploading the files" });
     }
 
     const { title, description, price, productImage, currencyId, currencyFormat, style, availableSizes, installments } = updatingdata
@@ -220,7 +220,7 @@ const Updatedetails = async (req, res) => {
 
     
 
-    let updaterProduct = await productModel.findOneAndUpdate({ _id: updateData }, { ...updateone }, { new: true })
+    let updaterProduct = await productModel.findOneAndUpdate({ _id: updateData }, {$set:{ updateone,productImage:productImg }}, { new: true })
     if (!updaterProduct) {
 
     }
@@ -253,14 +253,14 @@ const deleteProduct = async function (req, res) {
     }
 
     let deleteProduct = await productModel.findOneAndUpdate({ _id: productId }, { $set: { isDeleted: true, deletedAt: Date.now() } }, { new: true });
-    res.status(200).send({ status: true, msg:"Data Deleted Sucessfully" });
+     return res.status(200).send({ status: true, msg:"Data Deleted Sucessfully" });
 
 
   }
 
   catch (error) {
     console.log(error.message)
-    res.status(500).send({ status: true, msg: error.message })
+   return res.status(500).send({ status: true, msg: error.message })
   }
 };
 

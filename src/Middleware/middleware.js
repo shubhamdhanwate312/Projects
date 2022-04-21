@@ -26,8 +26,7 @@ const authorization = function(req, res, next) {
         if(!token)
         return res.status(401).send({status: false, msg:"Token not present"})
     
-        // let decodedToken = jwt.verify(token,"Group24")
-
+    
         let bearerHeader = token && token.split(' ')[1];
         let decodedToken =  jwt.verify(bearerHeader,"Group24", { ignoreExpiration: true })
 
@@ -41,11 +40,8 @@ const authorization = function(req, res, next) {
 
         let userLoggedIn = decodedToken.UserId
          
-
-
         if(userId !== userLoggedIn ){
-           
-            
+             
           return res.status(403).send({status : false, msg : "User is not Allowed access the request"})
         } next()
     }

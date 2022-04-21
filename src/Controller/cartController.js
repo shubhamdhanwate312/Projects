@@ -1,6 +1,9 @@
 const validator = require('../validator')
+
 const productModel = require('../models/productModel')
+
 const userModel = require('../models/Usermodel')
+
 const cartModel = require('../models/cartModel')
 
 
@@ -66,24 +69,13 @@ const createCart = async function(req, res) {
 //---------------------------------------------------------------2nd api----------------------------------------------------------------
 
 
-
-
-
-
-
-
-
-
-
 const updatedCart = async function (req, res) {
   try {
     let userId = req.params.userId
-    const idFromToken = req.userId
+  
     if (!validator.isValidObjectId(userId)) {
       return res.status(400).send({ status: false, msg: "userId is not a valid objectId" })
     }
-
-   
 
     let data = req.body
     const { cartId, productId, removeProduct } = data

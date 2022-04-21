@@ -12,7 +12,7 @@ const registerUser = async (req, res) => {
     const requestBody = req.body;
 
     const files = req.files;
-    // let address = JSON.parse(req.body.address)
+   
 
     if (!validator.isValid(requestBody)) {
       return res.status(400).send({ status: false, message: "Invalid request , Body is required" });
@@ -26,11 +26,9 @@ const registerUser = async (req, res) => {
       return res.status(400).send({ status: false, msg: "please insert the file-data" });
     }
 
-    // if (!validator.validFile(files[0])) {
-    //   return res.status(400).send({ status: false, msg: "please insert an image in files" });
-    // }
+    
     let { firstname, lastname, email, phone, password, address } = requestBody;
-    // let addres = JSON.parse(requestBody.address)
+    
 
     if (!validator.isValid(firstname)) {
       return res.status(400).send({ status: false, msg: "please enter the first name" });
@@ -159,44 +157,37 @@ const registerUser = async (req, res) => {
 ////.........................................................................
 const loginUser = async function (req, res) {
   try {
-    const data = req.body
-    const { email, password } = data
-    if (!validator.isValidRequestBody(data)) {
-      return res.status(400).send({ status: false, msg: "please enter some data" })
-    }
-    if (!validator.isValid(email)) {
-      return res.status(400).send({ status: false, msg: "please enter email id" })
-    }
-    if (!validator.validEmail(email.trim())) {
-      return res.status(400).send({ status: false, message: `Email should be a valid email address` })
+    let data = req.body;
+    let { email, password } = data;
 
-    }
-    if (!validator.isValid(password.trim())) {
-      return res.status(400).send({ status: false, msg: "Please enter password" })
-    }
-    if (!validator.isvalidPassword(password.trim())) {
-      return res.status(400).send({ status: false, msg: "password length Min.8 - Max. 15" })
-    }
+    if (!email || !password) return res.status(400).send({ status: false, msg: `Email and Password is mandatory field.` });
 
-    let validPassword = await bcrypt.compare(password, data.password);
+    if (!validator.isValid(email)) return res.status(400).send({ status: false, msg: "enter the valid email" });
 
+    if (!/^\w+([\.-]?\w+)@\w+([\. -]?\w+)(\.\w{2,3})+$/.test(email)) return res.status(400).send({ status: false, msg: "email ID is not valid" });
 
-    const CheckingUser = await userModel.findOne({ email, validPassword })
-    if (!CheckingUser) {
-      return res.status(400).send({ status: false, msg: "This user is not exists" })
-    }
+    if (!validator.isValid(password)) return res.status(400).send({ status: false, msg: "Enter the valid Password" });
 
+    if (password.length < 8 || password.length > 15) return res.status(400).send({ status: false, msg: "Password length should be 8 to 15" });
 
-    const token = await jwt.sign({
-      UserId: CheckingUser._id
-    }, 'Group24', { expiresIn: 60 * 60 }, { iat: Date.now() })
+    let user = await userModel.findOne({ email: email });
+    if (!user)return res.status(400).send({ status: false, msg: "emailId is not correct" });
 
-    res.header('x-api-key', token);
-    return res.status(200).send({ status: true, message: `Author login successfull`, data: { userId: CheckingUser._id, token: token } });
+    let rightPwd = bcrypt.compareSync(password, user.password);
+    if (!rightPwd) return res.status(400).send({ status: false, msg: "password is incorrect" });
+
+    let token = jwt.sign(
+      {
+        exp: Math.floor(Date.now() / 1000) + 24 * 60 * 60, // 24 hours expiration time
+        userId: user._id.toString(),
+      },
+      "Group24"
+    );
+    return res.status(200).send({status: true,msg: "login succesfully",data: { userId: user._id, token: token }});
   } catch (error) {
-    return res.status(500).send({ status: false, message: error.message });
+    return res.status(500).send({ status: false, msg: error.message });
   }
-}
+};
 
 ///...............................................................................................
 
@@ -323,7 +314,7 @@ const updateProfile = async function (req, res) {
 
     let updateone = { firstname, lastname, email, profileImage, phone, password, address }
 
-    let updaterUser = await userModel.findByIdAndUpdate({ _id: updateData }, { ...updateone, profileImage: profileImg }, { new: true })
+    let updaterUser = await userModel.findByIdAndUpdate({ _id: updateData }, { updateone, profileImage: profileImg }, { new: true })
 
     return res.status(200).send({ status: true, message: "User profile details", data: updaterUser })
   }

@@ -9,18 +9,12 @@ const createOrder =  async function(req,res){
       let userIdFromParams= req.params.userId
 
       const requestBody=req.body
-      const {userId, cancellable,status }=requestBody
+      const {cartId, cancellable,status }=requestBody
 
 
-// const user=await userModel.findOne({_id:userIdFromParams})
-
-
-const cart=await cartModel.findOne({userId:userIdFromParams})
+const cart=await cartModel.findOne({_id:cartId,userId:userIdFromParams})
 
    
-      
-
-     
     let totalQuantity = 0;
   const cartItems = cart.items;
 
